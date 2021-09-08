@@ -1,0 +1,16 @@
+{% if all_lists %}
+    <ul>
+        {% for lst in all_lists %}
+            <li><a href="{% url 'list view' lst.id %}">{{ lst.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No lists are available.</p>
+{% endif %}
+
+<form action="{% url 'new list' %}" method="post">
+    {% csrf_token %}
+    <label for="name">New List: </label>
+    <input id="name" type="text" name="name" value="{{ name }}">
+    <input type="submit" value="Add">
+</form>

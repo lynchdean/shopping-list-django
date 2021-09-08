@@ -1,0 +1,13 @@
+{# Go back to index #}
+<form action="{% url 'index' %}" method='get'>
+    <button type='submit'>back</button>
+</form>
+
+<h1>{{ lst.name }}</h1>
+<p>{{ lst.items }}</p>
+
+{# delete list #}
+<form action="{% url 'delete list' lst.id %}" method='post'>
+    {% csrf_token %}
+    <button type='submit'>delete</button>
+</form>
