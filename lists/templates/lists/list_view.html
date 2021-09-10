@@ -4,7 +4,29 @@
 </form>
 
 <h1>{{ lst.name }}</h1>
-<p>{{ lst.items }}</p>
+{% if lst.items %}
+    <ul>
+        {% for item in lst.items %}
+            <li>
+            <form action="{% url 'delete item' lst.id forloop.counter0 %}" method='post'>
+                {{ item }}
+                {% csrf_token %}
+                <button type='submit'>-</button>
+            </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No items are available.</p>
+{% endif %}
+
+{# Add to list #}
+<form action="{% url 'new item' lst.id %}" method="post">
+    {% csrf_token %}
+    <label for="item name">New Item: </label>
+    <input id="item name" type="text" name="item name" value="{{ item_name }}">
+    <input type="submit" value="Add">
+</form>
 
 {# delete list #}
 <form action="{% url 'delete list' lst.id %}" method='post'>
