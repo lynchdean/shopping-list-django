@@ -1,20 +1,24 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, get_list_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-import json
+from django.views import generic
 
 from .forms import NewListForm
 from .models import List
 
 
-def index(request):
-    all_lists = List.objects.order_by('name')
-    return render(request, 'lists/index.html', {'all_lists': all_lists})
+class IndexView(generic.ListView):
+    template_name = 'lists/index.html'
+    context_object_name = 'all_lists'
+
+    def get_queryset(self):
+        return List.objects.order_by('name')
 
 
-def list_view(request, list_id):
-    lst = get_object_or_404(List, pk=list_id)
-    return render(request, 'lists/list_view.html', {'lst': lst})
+class DetailView(generic.DetailView):
+    model = List
+    template_name = 'lists/list_detail.html'
+    context_object_name = 'list_detail'
 
 
 def new_list(request):

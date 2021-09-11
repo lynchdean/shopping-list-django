@@ -3,16 +3,16 @@
     <button type='submit'>back</button>
 </form>
 
-<h1>{{ lst.name }}</h1>
-{% if lst.items %}
+<h1>{{ list_detail.name }}</h1>
+{% if list_detail.items %}
     <ul>
-        {% for item in lst.items %}
+        {% for item in list_detail.items %}
             <li>
-            <form action="{% url 'delete item' lst.id forloop.counter0 %}" method='post'>
-                {{ item }}
-                {% csrf_token %}
-                <button type='submit'>-</button>
-            </form>
+                <form action="{% url 'delete item' list_detail.id forloop.counter0 %}" method='post'>
+                    {{ item }}
+                    {% csrf_token %}
+                    <button type='submit'>-</button>
+                </form>
             </li>
         {% endfor %}
     </ul>
@@ -21,7 +21,7 @@
 {% endif %}
 
 {# Add to list #}
-<form action="{% url 'new item' lst.id %}" method="post">
+<form action="{% url 'new item' list_detail.id %}" method="post">
     {% csrf_token %}
     <label for="item name">New Item: </label>
     <input id="item name" type="text" name="item name" value="{{ item_name }}">
@@ -29,7 +29,7 @@
 </form>
 
 {# delete list #}
-<form action="{% url 'delete list' lst.id %}" method='post'>
+<form action="{% url 'delete list' list_detail.id %}" method='post'>
     {% csrf_token %}
     <button type='submit'>delete</button>
 </form>
